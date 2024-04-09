@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/akhilsharma90/go-file-encrypt/file-encrypt/filecrypt"
 	"golang.org/x/term"
 )
 
@@ -21,10 +22,9 @@ func main() {
 	case "encrypt":
 		encryptHandle()
 	case "decrypt":
-		descrpthandle()
+		decryptHandle()
 	default:
-	fmt:
-		Println("Run encrypt to encrypt a file, and decrypt to decrypt a file.")
+		fmt.Println("Run encrypt to encrypt a file, and decrypt to decrypt a file.")
 		os.Exit(1)
 	}
 }
@@ -35,7 +35,7 @@ func printHelp() {
 	fmt.Println("")
 	fmt.Println("Usage:  ")
 	fmt.Println(" ")
-	fmt.Println("\t go run . encrypt /path/to/your/file ")
+	fmt.Println("\t go run . Encrypt /path/to/your/file ")
 	fmt.Println("")
 	fmt.Println("Commands:  ")
 	fmt.Println("")
@@ -47,33 +47,33 @@ func printHelp() {
 
 func encryptHandle() {
 	if len(os.Args) < 3 {
-		PrintLn("missing the path to the file.  For more information run . help")
+		fmt.Println("missing the path to the file.  For more information run . help")
 		os.Exit(0)
 
 	}
 	file := os.Args[2]
-	if !validatefile(file) {
+	if !validateFile(file) {
 		panic("File not found")
 	}
 	password := getPassword()
-	fmt.Println("\nEncrypting...")
+	fmt.Println("\n Encrypting...")
 	filecrypt.Encrypt(file, password)
 	fmt.Println("\n File successfully protected")
 }
 
 func decryptHandle() {
 	if len(os.Args) < 3 {
-		PrintLn("missing the path to the file.  For more information run . help")
+		fmt.Println("missing the path to the file.  For more information run . help")
 		os.Exit(0)
 
 	}
 	file := os.Args[2]
-	if !validatefile(file) {
+	if !validateFile(file) {
 		panic("File not found")
 	}
 	fmt.Print("Enter Password: ")
 	password, _ := term.ReadPassword(0)
-	fmt.Println("\nDecrypting...")
+	fmt.Println("\n Decrypting...")
 	filecrypt.Decrypt(file, password)
 	fmt.Println("\n File successfully decrypted")
 }
@@ -87,6 +87,7 @@ func getPassword() []byte {
 		fmt.Print("/n Passwords do not match.  Please try again\n ")
 		return getPassword()
 	}
+	return password
 }
 
 func validatePassword(password1 []byte, password2 []byte) bool {

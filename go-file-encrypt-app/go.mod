@@ -1,4 +1,4 @@
-module github.com/akhilsharma90/go-file-encryption
+module github.com/akhilsharma90/go-file-encrypt
 
 go 1.18
 
